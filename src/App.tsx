@@ -1,6 +1,5 @@
 import React from 'react';
 import {lazy,Suspense} from 'react'
-import './App.css';
 import {Route, HashRouter as Router, Switch} from 'react-router-dom';
 import {Header} from './components/Header';
 import {Footer} from './components/Footer';
@@ -11,19 +10,21 @@ const About = lazy(()=>import('./view/About'))
 
 function App() {
   return (
-    <div className="App">
+    <>
       <Router>
         <Header/>
-        <Suspense fallback={<Loading/>}>
-          <Switch>
-            <Route exact path="/about" component={About}/>
-            <Route exact path="/history" component={History}/>
-            <Route exact path="/" component={Home}/>
-          </Switch>
-        </Suspense>
+        <main>
+          <Suspense fallback={<Loading/>}>
+            <Switch>
+              <Route exact path="/about" component={About}/>
+              <Route exact path="/history" component={History}/>
+              <Route exact path="/" component={Home}/>
+            </Switch>
+          </Suspense>
+        </main>
       </Router>
       <Footer/>
-    </div>
+    </>
   );
 }
 
