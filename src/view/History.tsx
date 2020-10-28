@@ -6,4 +6,4 @@ const History:React.FC = () => {
   )
 }
 
-export {History}
+export default History

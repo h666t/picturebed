@@ -5,4 +5,4 @@ const About: React.FC = () => {
     <>About</>
   )
 }
-export {About}
+export default About
