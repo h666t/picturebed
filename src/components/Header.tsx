@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Icon} from './Icon';
 import {NavLink} from 'react-router-dom';
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
+import { Button } from 'antd';
 
 const StyledHeader = styled.header`
   background: rgb(52,58,64);
@@ -39,11 +40,27 @@ const StyledHeader = styled.header`
       >button:nth-child(2){
         margin-left: 5px;
       }
+      >span{
+        color: #fff;
+        margin-right: 10px;
+      }
   }
 `
 
 const Header:React.FC = () => {
+  const [x,setX] = useState<boolean>(false)
   const history = useHistory()
+  const register = () => {
+    history.push('/register')
+  }
+  const login = () => {
+    history.push('/login')
+    setX(true)
+  }
+
+  const logout = () => {
+      setX(false)
+  }
   return (
     <StyledHeader>
       <div className="left">
@@ -52,10 +69,17 @@ const Header:React.FC = () => {
         <NavLink to={'/about'} exact>About</NavLink>
         <NavLink to={'/history'} exact>History</NavLink>
       </div>
-      <div className="right">
-        <button onClick={()=>{history.push('/register')}}>注册</button>
-        <button onClick={()=>{history.push('/login')}}>登录</button>
+      {x ?
+        <div className="right">
+        <span>昊天</span>
+        <Button type="primary" onClick={logout}>登出</Button>
       </div>
+        :
+        <div className="right">
+          <Button type="primary" onClick={register}>注册</Button>
+          <Button type="primary" onClick={login}>登录</Button>
+        </div>
+      }
     </StyledHeader>
   )
 }
