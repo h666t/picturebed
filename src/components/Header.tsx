@@ -17,6 +17,7 @@ const StyledHeader = styled.header`
   >a{
     color: #fff;
     margin-right: 10px;
+    border-bottom: 1px solid transparent;
     &.active{
       border-bottom: 1px solid #fff;
     }
