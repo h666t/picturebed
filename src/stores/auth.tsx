@@ -1,4 +1,5 @@
 import {observable, action} from 'mobx';
+import lean from '../models/public';
 
 class AuthStore {
   @observable isLogin: boolean = false;
@@ -13,33 +14,44 @@ class AuthStore {
   };
 
   @action setUsername = (value: string) => {
-    this.values.username = value;
+    this.values.username =  value
   };
 
   @action setPassword = (value: string) => {
     this.values.password = value;
   };
 
-  @action login() {
-    this.isLoading = true;
-    console.log('登录中...');
-    setTimeout(() => {
-      this.isLogin = true;
-      this.isLoading = false;
-    }, 1000);
+  @action login(username:string,password:string) {
+   this.isLoading = true;
+    return new Promise((resolve, reject)=>{
+      lean.login(username,password).then((user)=>{
+        this.isLoading = false;
+        this.isLogin = true;
+        this.setUsername(username)
+        this.setPassword(password)
+        resolve(user)
+      }).catch((error)=>{
+        reject(error)
+      })
+    })
   }
 
-  @action register() {
+  @action register(username:string,password:string) {
     this.isLoading = true;
-    console.log('注册中...');
-    setTimeout(() => {
-      this.isLoading = false;
-      this.isLogin = true;
-    }, 1000);
+    return new Promise((resolve, reject)=>{
+      lean.register(username,password).then((user)=>{
+        this.isLoading = false
+        resolve(user)
+      }).catch((error)=>{
+        reject(error)
+      })
+    })
   }
 
   @action logout = () => {
-    console.log('已注销');
+    if (this.isLogin){
+      lean.logout().then(()=>{console.log('登出成功');})
+    }
   };
 }
 

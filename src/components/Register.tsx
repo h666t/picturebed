@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {observer} from 'mobx-react';
 import useStore from '../stores';
 import {Form, Input, Button, } from 'antd';
 import styled from 'styled-components';
-
+import {useHistory} from 'react-router-dom'
+import lean from '../models/public';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -29,14 +30,19 @@ const tailLayout = {
   wrapperCol: {offset: 4, span: 20},
 };
 const Register = observer<React.FC>(() => {
+  const history = useHistory()
   const {AuthStore} = useStore();
   const [username, setUsername] = useState(AuthStore.values.username);
   const changeUsername = (name: string) => {
     AuthStore.setUsername(name);
     setUsername(name);
   }
-  const onFinish: (values: any) => void = values => {
-    console.log('Success:', values);
+  const onFinish: (values: any) => void = values => { // 注册
+    const {username} = values
+    const {password} = values
+    AuthStore.register(username,password).then(()=>{
+      console.log('注册成功');
+    })
   };
 
   const onFinishFailed: (errorInfo: any) => void = errorInfo => {

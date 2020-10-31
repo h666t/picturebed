@@ -4,6 +4,7 @@ import {NavLink} from 'react-router-dom';
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
 import { Button } from 'antd';
+import useStore from '../stores';
 
 const StyledHeader = styled.header`
   background: rgb(52,58,64);
@@ -48,6 +49,7 @@ const StyledHeader = styled.header`
 `
 
 const Header:React.FC = () => {
+  const {AuthStore} = useStore()
   const [x,setX] = useState<boolean>(false)
   const history = useHistory()
   const register = () => {
@@ -59,7 +61,8 @@ const Header:React.FC = () => {
   }
 
   const logout = () => {
-      setX(false)
+    setX(false)
+    AuthStore.logout()
   }
   return (
     <StyledHeader>

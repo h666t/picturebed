@@ -26,7 +26,9 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
 const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-
+const HappyPack = require('happypack');
+const os = require('os');
+const happyThreadPool = HappyPack.ThreadPool({ size: os.cpus().length });
 const postcssNormalize = require('postcss-normalize');
 
 const appPackageJson = require(paths.appPackageJson);
@@ -357,6 +359,13 @@ module.exports = function (webpackEnv) {
     module: {
       strictExportPresence: true,
       rules: [
+        {
+          test: /\.js$/,
+          //把对.js 的文件处理交给id为happyBabel 的HappyPack 的实例执行
+          loader: 'happypack/loader?id=happyBabel',
+          //排除node_modules 目录下的文件
+          exclude: /node_modules/
+        },
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
         {
@@ -557,6 +566,18 @@ module.exports = function (webpackEnv) {
       ],
     },
     plugins: [
+      new HappyPack({
+        //用id来标识 happypack处理那里类文件
+        id: 'happyBabel',
+        //如何处理  用法和loader 的配置一样
+        loaders: [{
+          loader: 'babel-loader?cacheDirectory=true',
+        }],
+        //共享进程池
+        threadPool: happyThreadPool,
+        //允许 HappyPack 输出日志
+        verbose: true,
+      }),
       // Generates an `index.html` file with the <script> injected.
       new HtmlWebpackPlugin(
         Object.assign(
