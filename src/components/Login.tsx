@@ -3,6 +3,24 @@ import {observer} from 'mobx-react';
 import useStore from '../stores';
 import {Form, Input, Button,} from 'antd';
 import {useHistory} from 'react-router-dom'
+import styled from 'styled-components';
+
+const StyleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  >div{
+      max-width: 600px;
+      flex-grow: 1;
+      box-shadow: 4px 5px 20px rgba(0,0,0,0.25);
+      padding: 20px 20px;
+      >div{
+        text-align: center;
+        margin: 20px;
+        font-size: 28px;
+      }
+  }
+`
 
 const Login = observer<React.FC>(() => {
   const history = useHistory()
@@ -32,39 +50,43 @@ const Login = observer<React.FC>(() => {
     wrapperCol: {offset: 4, span: 20},
   };
   return (
-    <>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{remember: true}}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="用户名"
-          name="username"
-          rules={[{required: true, message: '请输入用户名！'}, {validator: validateUsername}]}
+    <StyleWrapper>
+      <div>
+        <div>登录</div>
+        <Form
+          {...layout}
+          name="basic"
+          initialValues={{remember: true}}
+          onFinish={onFinish}
+          onFinishFailed={onFinishFailed}
         >
-          <Input/>
-        </Form.Item>
+          <Form.Item
+            label="用户名"
+            name="username"
+            rules={[{required: true, message: '请输入用户名！'}, {validator: validateUsername}]}
+          >
+            <Input/>
+          </Form.Item>
 
-        <Form.Item
-          label="密码"
-          name="password"
-          rules={[
-            {required: true, message: '请输入密码！'},
-            {min: 4, message: '最少4个字符'}
-          ]}
-        >
-          <Input.Password/>
-        </Form.Item>
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
-    </>
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[
+              {required: true, message: '请输入密码！'},
+              {min: 4, message: '最少4个字符'}
+            ]}
+          >
+            <Input.Password/>
+          </Form.Item>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              登录
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+
+    </StyleWrapper>
   )
 })
 

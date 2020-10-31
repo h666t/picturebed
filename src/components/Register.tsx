@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React  from 'react';
 import {observer} from 'mobx-react';
 import useStore from '../stores';
 import {Form, Input, Button, } from 'antd';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom'
-import lean from '../models/public';
 const Wrapper = styled.div`
   display: flex;
   align-items: center;
@@ -106,7 +105,7 @@ const Register = observer<React.FC>(() => {
 
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
-              Submit
+              注册
             </Button>
           </Form.Item>
         </Form>
