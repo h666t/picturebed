@@ -1,20 +1,17 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {observer} from 'mobx-react';
 import useStore from '../stores';
 import {Form, Input, Button,} from 'antd';
-import AuthStore from '../stores/auth';
+import {useHistory} from 'react-router-dom'
 
 const Login = observer<React.FC>(() => {
-  const {AuthStore} = useStore();
-  const [username, setUsername] = useState(AuthStore.values.username);
-  const changeUsername = (name: string) => {
-    AuthStore.setUsername(name);
-    setUsername(name);
-  };
+  const history = useHistory()
+  const {Store} = useStore();
   const onFinish: (values: any) => void = values => { //登录
     const {username, password} = values;
-    AuthStore.login(username, password).then(() => {
+    Store.AuthStore.login(username, password).then(() => {
       console.log('登录成功');
+      history.push('/')
     });
   };
 

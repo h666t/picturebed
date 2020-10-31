@@ -1,6 +1,6 @@
 import  {createContext, useContext} from 'react';
 import AuthStore from './auth';
-
-const content = createContext({AuthStore: new AuthStore()});
+import UserStore from './user'
+const content = createContext({Store: {AuthStore, UserStore}});
 const useStore = () => useContext(content);
 export default useStore;

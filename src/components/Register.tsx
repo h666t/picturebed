@@ -31,17 +31,13 @@ const tailLayout = {
 };
 const Register = observer<React.FC>(() => {
   const history = useHistory()
-  const {AuthStore} = useStore();
-  const [username, setUsername] = useState(AuthStore.values.username);
-  const changeUsername = (name: string) => {
-    AuthStore.setUsername(name);
-    setUsername(name);
-  }
+  const {Store} = useStore();
   const onFinish: (values: any) => void = values => { // 注册
     const {username} = values
     const {password} = values
-    AuthStore.register(username,password).then(()=>{
+    Store.AuthStore.register(username,password).then(()=>{
       console.log('注册成功');
+      history.push('/login')
     })
   };
 

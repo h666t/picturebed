@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Icon} from './Icon';
 import {NavLink} from 'react-router-dom';
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
 import { Button } from 'antd';
 import useStore from '../stores';
+import {observer} from 'mobx-react';
 
 const StyledHeader = styled.header`
   background: rgb(52,58,64);
@@ -47,23 +48,19 @@ const StyledHeader = styled.header`
       }
   }
 `
-
-const Header:React.FC = () => {
-  const {AuthStore} = useStore()
-  const [x,setX] = useState<boolean>(false)
+const Header = observer<React.FC>(() => {
+  const {Store} = useStore()
   const history = useHistory()
   const register = () => {
     history.push('/register')
   }
   const login = () => {
     history.push('/login')
-    setX(true)
+  }
+  const logout = () => {
+    Store.AuthStore.logout()
   }
 
-  const logout = () => {
-    setX(false)
-    AuthStore.logout()
-  }
   return (
     <StyledHeader>
       <div className="left">
@@ -72,19 +69,19 @@ const Header:React.FC = () => {
         <NavLink to={'/about'} exact>About</NavLink>
         <NavLink to={'/history'} exact>History</NavLink>
       </div>
-      {x ?
-        <div className="right">
-        <span>昊天</span>
-        <Button type="primary" onClick={logout}>登出</Button>
-      </div>
-        :
+      {Store.UserStore.user === '' ?
         <div className="right">
           <Button type="primary" onClick={register}>注册</Button>
           <Button type="primary" onClick={login}>登录</Button>
         </div>
+        :
+        <div className="right">
+          <span>你好，{Store.UserStore.user}</span>
+          <Button type="primary" onClick={logout}>登出</Button>
+        </div>
       }
     </StyledHeader>
   )
-}
+})
 
 export {Header}
