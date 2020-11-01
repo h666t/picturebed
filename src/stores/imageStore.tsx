@@ -16,8 +16,9 @@ class imageStore {
         this.filename = name
         resolve(serverFile)
       }).catch(err=>{
+        alert('上传失败S')
         reject(err)
-      })
+      }).finally(()=>{this.isUploading = false})
     })
   }
 }
