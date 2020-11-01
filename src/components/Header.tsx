@@ -1,13 +1,14 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Icon} from './Icon';
 import {NavLink} from 'react-router-dom';
 import styled from 'styled-components'
 import {useHistory} from 'react-router-dom'
 import { Button } from 'antd';
-import useStore from '../stores';
+import useStore from '../stores/indexStore';
 import {observer} from 'mobx-react';
 import lean from '../models/public';
-import {log} from 'util';
+import {User} from 'leancloud-storage';
+import auth from '../stores/authStore';
 
 const StyledHeader = styled.header`
   background: rgb(52,58,64);
@@ -64,23 +65,20 @@ const Header = observer<React.FC>(() => {
   }
   return (
     <StyledHeader>
-      <input type={'file'} onChange={(e)=>{
-        lean.uploadImage('x',e.target.files![0]).then(()=>{console.log('success');}).catch(err=>{console.log(err);})
-      }} />
       <div className="left">
         <Icon id={'#logo'} fill={'rgb(97,218,251)'}/>
         <NavLink to={'/'} exact>Home</NavLink>
         <NavLink to={'/about'} exact>About</NavLink>
         <NavLink to={'/history'} exact>History</NavLink>
       </div>
-      {Store.UserStore.user === '' ?
+      {auth.values.username === '' ?
         <div className="right">
           <Button type="primary" onClick={register}>注册</Button>
           <Button type="primary" onClick={login}>登录</Button>
         </div>
         :
         <div className="right">
-          <span>你好，{Store.UserStore.user}</span>
+          <span>你好，{User.current().getUsername()}</span>
           <Button type="primary" onClick={logout}>登出</Button>
         </div>
       }

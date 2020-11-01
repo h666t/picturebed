@@ -1,6 +1,6 @@
 import React  from 'react';
 import {observer} from 'mobx-react';
-import useStore from '../stores';
+import useStore from '../stores/indexStore';
 import {Form, Input, Button, } from 'antd';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom'

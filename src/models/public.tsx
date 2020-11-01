@@ -27,7 +27,11 @@ const lean = {
       return AV.User.logOut()
   },
   getUsername: ()=>{
-    return  AV.User.current().getUsername();
+    if (AV.User.current()){
+      return  AV.User.current().getUsername() ;
+    }else {
+      return undefined
+    }
   },
   uploadImage : (name: string,file: any)=>{
     return new Promise((resolve, reject)=>{
@@ -36,7 +40,7 @@ const lean = {
       Production.set('name',name)
       Production.set('owner',AV.User.current())
       Production.set('image',avFile)
-      Production.save().then( ()=>resolve(),error=>reject(error) )
+      Production.save().then( (serverFile)=>resolve(serverFile),error=>reject(error) )
     })
   }
 }

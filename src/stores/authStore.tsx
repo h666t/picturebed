@@ -1,6 +1,5 @@
 import {observable, action} from 'mobx';
 import lean from '../models/public';
-import UserStore from './user'
 class AuthStore {
   @observable isLogin: boolean = false;
   @observable isLoading: boolean = false;
@@ -29,7 +28,6 @@ class AuthStore {
         this.isLogin = true;
         this.setUsername(username)
         this.setPassword(password)
-        UserStore.setUser(username)
         resolve(user)
       }).catch((error)=>{
         reject(error)
@@ -50,10 +48,9 @@ class AuthStore {
   }
 
   @action logout = () => {
-    if (this.isLogin){
       lean.logout().then(()=>{console.log('登出成功');})
-      UserStore.replaceUser()
-    }
+      this.values.username = ''
+      this.isLogin = false
   };
 }
 
