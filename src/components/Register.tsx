@@ -5,17 +5,18 @@ import {Form, Input, Button, } from 'antd';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom'
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
   >div{
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      margin: auto;
       max-width: 600px;
-      flex-grow: 1;
       box-shadow: 4px 5px 20px rgba(0,0,0,0.25);
       padding: 20px 20px;
       >div{
         text-align: center;
-        margin: 20px;
+        padding: 20px;
         font-size: 28px;
       }
   }
@@ -37,7 +38,7 @@ const Register = observer<React.FC>(() => {
     Store.AuthStore.register(username,password).then(()=>{
       console.log('注册成功');
       history.push('/login')
-    })
+    },(err)=>{alert(err.rawMessage)})
   };
 
   const onFinishFailed: (errorInfo: any) => void = errorInfo => {

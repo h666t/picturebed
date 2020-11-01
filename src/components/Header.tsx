@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {Icon} from './Icon';
 import {NavLink} from 'react-router-dom';
 import styled from 'styled-components'
@@ -6,6 +6,8 @@ import {useHistory} from 'react-router-dom'
 import { Button } from 'antd';
 import useStore from '../stores';
 import {observer} from 'mobx-react';
+import lean from '../models/public';
+import {log} from 'util';
 
 const StyledHeader = styled.header`
   background: rgb(52,58,64);
@@ -60,9 +62,11 @@ const Header = observer<React.FC>(() => {
   const logout = () => {
     Store.AuthStore.logout()
   }
-
   return (
     <StyledHeader>
+      <input type={'file'} onChange={(e)=>{
+        lean.uploadImage('x',e.target.files![0]).then(()=>{console.log('success');}).catch(err=>{console.log(err);})
+      }} />
       <div className="left">
         <Icon id={'#logo'} fill={'rgb(97,218,251)'}/>
         <NavLink to={'/'} exact>Home</NavLink>

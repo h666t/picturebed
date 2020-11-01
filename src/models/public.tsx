@@ -28,6 +28,16 @@ const lean = {
   },
   getUsername: ()=>{
     return  AV.User.current().getUsername();
+  },
+  uploadImage : (name: string,file: any)=>{
+    return new Promise((resolve, reject)=>{
+      const avFile = new AV.File(name,file)
+      const Production = new AV.Object()
+      Production.set('name',name)
+      Production.set('owner',AV.User.current())
+      Production.set('image',avFile)
+      Production.save().then( ()=>resolve(),error=>reject(error) )
+    })
   }
 }
 
