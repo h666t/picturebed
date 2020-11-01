@@ -21,4 +21,4 @@ class imageStore {
     })
   }
 }
-export default imageStore
+export default new imageStore()
