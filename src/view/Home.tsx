@@ -1,9 +1,12 @@
 import React from 'react';
+import Upload from '../components/home/Upload';
 
 const Home:React.FC = () => {
   return (
     <>
-      <div>hi </div>
+      <div>
+        <Upload/>
+      </div>
     </>
   )
 }

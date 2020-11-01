@@ -36,7 +36,7 @@ const lean = {
   uploadImage : (name: string,file: any)=>{
     return new Promise((resolve, reject)=>{
       const avFile = new AV.File(name,file)
-      const Production = new AV.Object()
+      const Production = new AV.Object('Image')
       Production.set('name',name)
       Production.set('owner',AV.User.current())
       Production.set('image',avFile)
