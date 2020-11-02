@@ -1,10 +1,11 @@
 import {observable, action} from 'mobx';
 import lean from '../models/public';
+import {User} from 'leancloud-storage';
 class AuthStore {
   @observable isLogin: boolean = false;
   @observable isLoading: boolean = false;
   @observable values: { username: string, password: string } = {
-    username: '',
+    username: (User.current() || {getUsername:()=>{return ''}}).getUsername() ,
     password: ''
   };
 

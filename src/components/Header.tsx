@@ -71,14 +71,14 @@ const Header = observer<React.FC>(() => {
         <NavLink to={'/about'} exact>About</NavLink>
         <NavLink to={'/history'} exact>History</NavLink>
       </div>
-      {auth.values.username === '' ?
+      {Store.AuthStore.values.username === '' ?
         <div className="right">
           <Button type="primary" onClick={register}>注册</Button>
           <Button type="primary" onClick={login}>登录</Button>
         </div>
         :
         <div className="right">
-          <span>你好，{User.current().getUsername()}</span>
+          <span>你好，{Store.AuthStore.values.username}</span>
           <Button type="primary" onClick={logout}>登出</Button>
         </div>
       }

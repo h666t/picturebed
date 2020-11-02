@@ -1,7 +1,7 @@
 import React from 'react';
 import {observer} from 'mobx-react';
 import useStore from '../stores/indexStore';
-import {Form, Input, Button,} from 'antd';
+import {Form, Input, Button, message} from 'antd';
 import {useHistory} from 'react-router-dom'
 import styled from 'styled-components';
 
@@ -30,9 +30,8 @@ const Login = observer<React.FC>(() => {
   const onFinish: (values: any) => void = values => { //登录
     const {username, password} = values;
     Store.AuthStore.login(username, password).then(() => {
-      console.log('登录成功');
       history.replace('/')
-    }).catch(err=>{alert(JSON.stringify(err.rawMessage))});
+    }).catch(err=>{message.warning(JSON.stringify(err.rawMessage),1)});
   };
 
   const onFinishFailed: (errorInfo: any) => void = errorInfo => {

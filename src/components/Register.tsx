@@ -1,7 +1,7 @@
 import React  from 'react';
 import {observer} from 'mobx-react';
 import useStore from '../stores/indexStore';
-import {Form, Input, Button, } from 'antd';
+import {Form, Input, Button,message } from 'antd';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom'
 const Wrapper = styled.div`
@@ -38,7 +38,7 @@ const Register = observer<React.FC>(() => {
     Store.AuthStore.register(username,password).then(()=>{
       console.log('注册成功');
       history.push('/login')
-    },(err)=>{alert(err.rawMessage)})
+    },(err)=>{message.warning(err.rawMessage,1)})
   };
 
   const onFinishFailed: (errorInfo: any) => void = errorInfo => {

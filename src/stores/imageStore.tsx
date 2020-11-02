@@ -1,5 +1,7 @@
 import {observable,action} from 'mobx';
 import lean from '../models/public';
+import AuthStore from './authStore'
+import {message} from 'antd'
 
 class imageStore {
   @observable file = null
@@ -9,14 +11,18 @@ class imageStore {
 
   @action uploadImage = (name: string,file: any) => {
     return new Promise((resolve, reject)=>{
+      if (!AuthStore.isLogin){
+        message.warning('请先登录',1)
+        return
+      }
+      this.isUploading = true
       lean.uploadImage(name,file).then((serverFile)=>{
-        this.isUploading = true
         this.file = file
         this.serverFile = serverFile
         this.filename = name
         resolve(serverFile)
       }).catch(err=>{
-        alert('上传失败')
+        message.warning('上传失败',1)
         reject(err)
       }).finally(()=>{this.isUploading = false})
     })
