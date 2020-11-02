@@ -2,6 +2,7 @@ import {observable,action} from 'mobx';
 import lean from '../models/public';
 import AuthStore from './authStore'
 import {message} from 'antd'
+import {User} from 'leancloud-storage';
 
 class imageStore {
   @observable file = null
@@ -11,7 +12,7 @@ class imageStore {
 
   @action uploadImage = (name: string,file: any) => {
     return new Promise((resolve, reject)=>{
-      if (!AuthStore.isLogin){
+      if (!User.current()){
         message.warning('请先登录',1)
         return
       }
