@@ -1,5 +1,5 @@
 import React from 'react';
-import Upload from '../components/home/Upload';
+import Upload from '../components/home/upload/Upload';
 
 const Home:React.FC = () => {
   return (
