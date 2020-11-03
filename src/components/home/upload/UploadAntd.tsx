@@ -2,6 +2,11 @@ import React from 'react';
 import { Upload ,message} from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import useStore from '../../../stores/indexStore';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  margin-bottom: 20px;
+`
 
 const { Dragger } = Upload;
 const UploadAntd = () => {
@@ -14,7 +19,7 @@ const UploadAntd = () => {
     }
 
   return (
-    <div>
+    <Wrapper>
       <Dragger beforeUpload={beforeUpload} showUploadList={false}  >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
@@ -25,7 +30,7 @@ const UploadAntd = () => {
           band files
         </p>
       </Dragger>
-    </div>
+    </Wrapper>
 
   )
 }

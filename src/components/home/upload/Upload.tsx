@@ -4,7 +4,7 @@ import useStore from '../../../stores/indexStore';
 import UploadAntd from './UploadAntd';
 import Loading from '../../Loading';
 import styled from 'styled-components';
-import {Input} from 'antd'
+import Result from './Result';
 const Wrapper = styled.div`
   >.tips{
     margin-top: 10px;
@@ -14,31 +14,15 @@ const Wrapper = styled.div`
     color: white;
   }
 `
-const Result = styled.div`
+const LoadingWrapper = styled.div`
   display: flex;
-  flex-direction: column;
-  max-width: 500px;
-  padding: 20px;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  >strong{
-    padding: 10px;
-  }
-`
-
-const Item = styled.div`
-  margin-bottom: 10px;
-  
+  align-items: center;
+  justify-content: center;
 `
 
 const Upload = observer<React.FC> (() => {
   const {Store} = useStore()
-  useEffect(()=>{
-    console.log(Store.imageStore.serverFile);
-  })
+
   return (
     <Wrapper>
       {Store.AuthStore.values.username === ''
@@ -49,21 +33,13 @@ const Upload = observer<React.FC> (() => {
         <UploadAntd/>
       </div>
       <div>
-        {Store.imageStore.isUploading ? <Loading/> : undefined}
+        {Store.imageStore.isUploading
+          ?<LoadingWrapper><Loading/></LoadingWrapper>
+          : undefined}
         {
           Store.imageStore.serverFile
             ?
-            <Result>
-                <strong>上传结果：</strong>
-              <Item>
-                <span>HTML：</span>
-                <Input  value={ `<a href=${Store.imageStore.serverFile.attributes.image.attributes.url} > </a>` } />
-              </Item>
-              <Item>
-                <span>Link only：</span>
-                <Input  value={ `${Store.imageStore.serverFile.attributes.image.attributes.url}` } />
-              </Item>
-            </Result>
+            <Result/>
             : undefined
         }
       </div>
