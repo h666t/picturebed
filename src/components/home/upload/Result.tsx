@@ -63,16 +63,16 @@ const Result = () => {
         <div>
           <div>
             <span>宽度：</span>
-            <InputNumber min={0}   onChange={changeWidth} />
+            <InputNumber min={0} placeholder={'默认500'}  onChange={changeWidth} />
           </div>
           <div>
             <span>高度：</span>
-            <InputNumber min={0}   onChange={changeHeight} />
+            <InputNumber min={0} placeholder={'默认500'}  onChange={changeHeight} />
           </div>
         </div>
       </div>
       <div className={'pic'}>
-        <img src={Store.imageStore.serverFile.attributes.image.attributes.url+`?imageView2/0/w/${size[0]}/h/${size[1]}`} alt=""/>
+        <img src={Store.imageStore.serverFile.attributes.image.attributes.url} alt=""/>
       </div>
     </Wrapper>
 

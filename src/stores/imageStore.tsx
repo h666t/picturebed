@@ -1,6 +1,5 @@
 import {observable,action} from 'mobx';
 import lean from '../models/public';
-import AuthStore from './authStore'
 import {message} from 'antd'
 import {User} from 'leancloud-storage';
 
@@ -17,6 +16,7 @@ class imageStore {
         return
       }
       this.isUploading = true
+      this.serverFile = null
       lean.uploadImage(name,file).then((serverFile)=>{
         this.file = file
         this.serverFile = serverFile

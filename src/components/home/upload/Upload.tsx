@@ -2,7 +2,6 @@ import React, {useEffect} from 'react';
 import {observer} from 'mobx-react';
 import useStore from '../../../stores/indexStore';
 import UploadAntd from './UploadAntd';
-import Loading from '../../Loading';
 import styled from 'styled-components';
 import Result from './Result';
 const Wrapper = styled.div`
@@ -13,11 +12,6 @@ const Wrapper = styled.div`
     padding: 10px;
     color: white;
   }
-`
-const LoadingWrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `
 
 const Upload = observer<React.FC> (() => {
@@ -33,9 +27,6 @@ const Upload = observer<React.FC> (() => {
         <UploadAntd/>
       </div>
       <div>
-        {Store.imageStore.isUploading
-          ?<LoadingWrapper><Loading/></LoadingWrapper>
-          : undefined}
         {
           Store.imageStore.serverFile
             ?

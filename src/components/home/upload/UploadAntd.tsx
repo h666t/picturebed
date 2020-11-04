@@ -1,15 +1,16 @@
 import React from 'react';
-import { Upload ,message} from 'antd';
+import { Upload ,message, Spin, Switch, Alert} from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import useStore from '../../../stores/indexStore';
 import styled from 'styled-components';
+import {observer} from 'mobx-react';
 
 const Wrapper = styled.div`
   margin-bottom: 20px;
 `
 
 const { Dragger } = Upload;
-const UploadAntd = () => {
+const UploadAntd = observer(() => {
   const {Store} = useStore()
   const beforeUpload = (file: any)=>{
       Store.imageStore.uploadImage(file.name,file)
@@ -19,7 +20,9 @@ const UploadAntd = () => {
     }
 
   return (
+
     <Wrapper>
+      <Spin spinning={Store.imageStore.isUploading}>
       <Dragger beforeUpload={beforeUpload} showUploadList={false}  >
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
@@ -30,9 +33,10 @@ const UploadAntd = () => {
           band files
         </p>
       </Dragger>
+    </Spin>
     </Wrapper>
 
   )
-}
+})
 
 export default UploadAntd
