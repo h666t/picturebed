@@ -15,6 +15,14 @@ class imageStore {
         message.warning('请先登录',1)
         return
       }
+      if (!/(\.png$)|(\.jpeg$)|(\.jpg$)|(\.svg$)/ig.test(file.name)){
+        message.error('仅支持 png / jpeg / jpg / svg 格式图片')
+        return;
+      }
+      if (file.size > 1024*1024){
+        message.error('仅支持1M以下图片')
+        return;
+      }
       this.isUploading = true
       this.serverFile = null
       lean.uploadImage(name,file).then((serverFile)=>{
