@@ -2,6 +2,8 @@ import {observable,action} from 'mobx';
 import lean from '../models/public';
 import {message} from 'antd'
 import {User} from 'leancloud-storage';
+import AV from 'leancloud-storage'
+import AuthStore  from './authStore'
 
 class imageStore {
   @observable file = null
@@ -28,12 +30,27 @@ class imageStore {
       lean.uploadImage(name,file).then((serverFile)=>{
         this.file = file
         this.serverFile = serverFile
+        console.log(this.serverFile);
         this.filename = name
         resolve(serverFile)
       }).catch(err=>{
         message.warning('上传失败',1)
         reject(err)
       }).finally(()=>{this.isUploading = false})
+    })
+  }
+
+  @action find({page=0,limit=10}){
+      const query = new AV.Query('Image')
+      query.include('owner')
+      query.equalTo('owner',User.current())
+      query.limit(limit)
+      query.skip(page*limit)
+      query.descending('createdAt');
+      return new Promise((resolve, reject)=>{
+        query.find()
+          .then((result)=>{resolve(result)})
+          .catch((err)=>{reject(err);})
     })
   }
 }

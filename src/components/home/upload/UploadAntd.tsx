@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Upload ,message, Spin, Switch, Alert} from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import useStore from '../../../stores/indexStore';
@@ -18,7 +18,9 @@ const UploadAntd = observer(() => {
         .catch((error)=>{message.warning(JSON.stringify(error),1)})
       return false
     }
-
+  useEffect(()=>{// @ts-ignore
+    window.find1 = Store.imageStore.find
+  },[])
   return (
     <Wrapper>
       <Spin spinning={Store.imageStore.isUploading}>
