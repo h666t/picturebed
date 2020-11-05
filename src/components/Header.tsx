@@ -67,9 +67,9 @@ const Header = observer<React.FC>(() => {
     <StyledHeader>
       <div className="left">
         <Icon id={'#logo'} fill={'rgb(97,218,251)'}/>
-        <NavLink to={'/'} exact>Home</NavLink>
-        <NavLink to={'/about'} exact>About</NavLink>
-        <NavLink to={'/history'} exact>History</NavLink>
+        <NavLink to={'/'} exact>首页</NavLink>
+        <NavLink to={'/about'} exact>关于</NavLink>
+        <NavLink to={'/history'} exact>上传历史</NavLink>
       </div>
       {Store.AuthStore.values.username === '' ?
         <div className="right">

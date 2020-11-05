@@ -3,7 +3,8 @@ import lean from '../models/public';
 import {message} from 'antd'
 import {User} from 'leancloud-storage';
 import AV from 'leancloud-storage'
-import AuthStore  from './authStore'
+
+
 
 class imageStore {
   @observable file = null
@@ -40,10 +41,21 @@ class imageStore {
     })
   }
 
+  @action fetchHistoryStateLength(){
+    const query = new AV.Query('Image')
+    query.include('owner')
+    query.equalTo('owner',User.current())
+    return new Promise((resolve, reject)=>{
+      query.find().then(r=>{
+        resolve(r.length)
+      }).catch(err=>{console.log(err);})
+    })
+  }
+
   @action find({page=0,limit=10}){
-      const query = new AV.Query('Image')
-      query.include('owner')
-      query.equalTo('owner',User.current())
+    const query = new AV.Query('Image')
+    query.include('owner')
+    query.equalTo('owner',User.current())
       query.limit(limit)
       query.skip(page*limit)
       query.descending('createdAt');
@@ -52,6 +64,21 @@ class imageStore {
           .then((result)=>{resolve(result)})
           .catch((err)=>{reject(err);})
     })
+  }
+
+  @action fetchHistoryState(page:number,limit:number,fn:([])=>void){
+    this.find({page, limit})
+      .then((r : any)=>{
+        const result:any = []
+        r.forEach((item:any) => {
+          const url = item.attributes.image.attributes.url
+          const name = item.attributes.image.attributes.name
+          result.push({url,name});
+        })
+        fn(result)
+        console.log(r);
+      })
+      .catch(err => message.error('获取历史记录失败'));
   }
 }
 export default new imageStore()

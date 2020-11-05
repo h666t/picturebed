@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import { Upload ,message, Spin, Switch, Alert} from 'antd';
+import React from 'react';
+import { Upload ,message, Spin} from 'antd';
 import { InboxOutlined } from '@ant-design/icons';
 import useStore from '../../../stores/indexStore';
 import styled from 'styled-components';
@@ -18,9 +18,6 @@ const UploadAntd = observer(() => {
         .catch((error)=>{message.warning(JSON.stringify(error),1)})
       return false
     }
-  useEffect(()=>{// @ts-ignore
-    window.find1 = Store.imageStore.find
-  },[])
   return (
     <Wrapper>
       <Spin spinning={Store.imageStore.isUploading}>
@@ -30,8 +27,7 @@ const UploadAntd = observer(() => {
         </p>
         <p className="ant-upload-text">点击或拖拽上传</p>
         <p className="ant-upload-hint">
-          Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-          band files
+          仅支持 png / jpeg / jpg / svg 格式图片
         </p>
       </Dragger>
     </Spin>

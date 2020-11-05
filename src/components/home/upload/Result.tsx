@@ -48,13 +48,13 @@ const Result = () => {
   return (
     <Wrapper>
       <Collapse defaultActiveKey={['1']}>
-        <Panel header="HTML" key="1">
+        <Panel header="a标签" key="1">
           <p>{ `<a href=${Store.imageStore.serverFile.attributes.image.attributes.url} > </a>`}</p>
         </Panel>
-        <Panel header="Link only" key="2">
+        <Panel header="链接" key="2">
           <p>{Store.imageStore.serverFile.attributes.image.attributes.url}</p>
         </Panel>
-        <Panel header="Customized Link" key="3">
+        <Panel header="自定义宽高链接" key="3">
           <p>{Store.imageStore.serverFile.attributes.image.attributes.url+`?imageView2/0/h/${size[0]}/w/${size[1]}`}</p>
         </Panel>
       </Collapse>
