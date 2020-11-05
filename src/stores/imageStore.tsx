@@ -3,6 +3,7 @@ import lean from '../models/public';
 import {message} from 'antd'
 import {User} from 'leancloud-storage';
 import AV from 'leancloud-storage'
+import dayjs from 'dayjs';
 
 
 
@@ -52,7 +53,7 @@ class imageStore {
     })
   }
 
-  @action find({page=0,limit=10}){
+  @action find({page=0,limit=5}){
     const query = new AV.Query('Image')
     query.include('owner')
     query.equalTo('owner',User.current())
@@ -61,19 +62,19 @@ class imageStore {
       query.descending('createdAt');
       return new Promise((resolve, reject)=>{
         query.find()
-          .then((result)=>{resolve(result)})
+          .then((result)=>{console.log(result); resolve(result)})
           .catch((err)=>{reject(err);})
     })
   }
 
-  @action fetchHistoryState(page:number,limit:number,fn:([])=>void){
+  @action fetchHistoryState(page:number,limit:number,fn:(r:{id:string,name:string,url:string,createdAt:any}[])=>void){
     this.find({page, limit})
       .then((r : any)=>{
         const result:any = []
         r.forEach((item:any) => {
-          const url = item.attributes.image.attributes.url
-          const name = item.attributes.image.attributes.name
-          result.push({url,name});
+          const {url,name,id} = item.attributes.image.attributes
+          const {createdAt} = item
+          result.push({url,name,id,createdAt});
         })
         fn(result)
         console.log(r);
