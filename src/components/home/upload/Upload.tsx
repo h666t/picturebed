@@ -28,7 +28,7 @@ const Upload = observer<React.FC> (() => {
       </div>
       <div>
         {
-          Store.imageStore.serverFile
+          Store.imageStore.serverFile && Store.AuthStore.values.username
             ?
             <Result/>
             : undefined
