@@ -12,6 +12,7 @@ class imageStore {
   @observable filename = ''
   @observable serverFile: any = null
   @observable isUploading = false
+  @observable isHistoryDataLoading = false
 
   @action uploadImage = (name: string,file: any) => {
     return new Promise((resolve, reject)=>{
@@ -54,6 +55,7 @@ class imageStore {
   }
 
   @action find({page=0,limit=5}){
+    this.isHistoryDataLoading = true
     const query = new AV.Query('Image')
     query.include('owner')
     query.equalTo('owner',User.current())
@@ -64,6 +66,7 @@ class imageStore {
         query.find()
           .then((result)=>{console.log(result); resolve(result)})
           .catch((err)=>{reject(err);})
+          .finally(()=>{this.isHistoryDataLoading = false})
     })
   }
 

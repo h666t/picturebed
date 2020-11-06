@@ -4,6 +4,7 @@ import useStore from '../stores/indexStore';
 import {User} from 'leancloud-storage';
 import styled from 'styled-components';
 import dayjs from 'dayjs';
+import {observer} from 'mobx-react';
 
 const Wrapper = styled.div`
   max-width: 500px;
@@ -23,7 +24,7 @@ const Img = styled.img`
   object-fit: contain;
 `
 
-const History: React.FC = () => {
+const History = observer( () => {
   const [current,setCurrent] = useState(1)
   const onChange = (page: number) => {
     setCurrent(page)
@@ -36,47 +37,47 @@ const History: React.FC = () => {
   },[])
   useEffect(
     ()=>{Store.imageStore.fetchHistoryState(current - 1, 5,
-    (x)=>{ setHistoryState(x)} )}, [current,Store.imageStore]
+      (x)=>{ setHistoryState(x)} )}, [current,Store.imageStore]
   )
 
   return (
     <>
       {
-        User.current() && historyState.length > 0
+        Store.AuthStore.values.username && historyState.length > 0
           ? <Wrapper>
-                  <List
-                    itemLayout="horizontal"
-                    dataSource={historyState}
-                    split={true}
-                    renderItem={item => (
-                      <List.Item key={item.id}
-                                 extra={
-                        <Img
-                          width={50}
-                          height={50}
-                          alt="logo"
-                          src={item.url}
-                        />
-                      } >
-                        <List.Item.Meta
-                          title={<a href="https://ant.design">{'文件名：' + item.name}</a>}
-                          description={
-                            <div>
-                              <div>创建时间：{JSON.stringify(dayjs(item.createdAt).format('YYYY年MM月DD日hh:mm'))}</div>
-                              <div>url：{item.url}</div>
-                            </div>
-
-                          }
-                        />
-                      </List.Item>
-                    )}
+            <List
+              itemLayout="horizontal"
+              dataSource={historyState}
+              split={true}
+              loading={Store.imageStore.isHistoryDataLoading}
+              renderItem={item => (
+                <List.Item key={item.id}
+                           extra={
+                             <Img
+                               width={50}
+                               height={50}
+                               alt="logo"
+                               src={item.url}
+                             />
+                           } >
+                  <List.Item.Meta
+                    title={<a href="https://ant.design">{'文件名：' + item.name}</a>}
+                    description={
+                      <div>
+                        <div>创建时间：{JSON.stringify(dayjs(item.createdAt).format('YYYY年MM月DD日hh:mm'))}</div>
+                        <div>url：{item.url}</div>
+                      </div>
+                    }
                   />
-              <Pagination className={'pages'} onChange={onChange} defaultPageSize={5} total={length}/>
-            </Wrapper>
+                </List.Item>
+              )}
+            />
+            <Pagination className={'pages'} onChange={onChange} defaultCurrent={1} defaultPageSize={5} total={length}/>
+          </Wrapper>
           :<Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
       }
-  </>
+    </>
   );
-};
+})
 
 export default History
