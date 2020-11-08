@@ -3,9 +3,6 @@ import lean from '../models/public';
 import {message} from 'antd'
 import {User} from 'leancloud-storage';
 import AV from 'leancloud-storage'
-import dayjs from 'dayjs';
-
-
 
 class imageStore {
   @observable file = null

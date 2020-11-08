@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState} from 'react';
 import { Collapse,InputNumber } from 'antd';
 import useStore from '../../../stores/indexStore';
 import styled from 'styled-components';
