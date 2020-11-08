@@ -15,6 +15,11 @@ const Wrapper = styled.div`
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    >.preview{
+      font-weight: bold;
+      text-align: center;
+      border:1px solid red;
+    }
     >span:nth-child(1){
           font-weight: bold;
           margin-right: 10px;
@@ -71,8 +76,9 @@ const Result = () => {
           </div>
         </div>
       </div>
+      <div className={'preview'}>预览：</div>
       <div className={'pic'}>
-        <img src={Store.imageStore.serverFile.attributes.image.attributes.url} alt=""/>
+        <img src={Store.imageStore.serverFile.attributes.image.attributes.url + '?imageView2/0/h/300/h/300'} alt=""/>
       </div>
     </Wrapper>
 
