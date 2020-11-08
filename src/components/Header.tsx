@@ -6,9 +6,6 @@ import {useHistory} from 'react-router-dom'
 import { Button } from 'antd';
 import useStore from '../stores/indexStore';
 import {observer} from 'mobx-react';
-import lean from '../models/public';
-import {User} from 'leancloud-storage';
-import auth from '../stores/authStore';
 
 const StyledHeader = styled.header`
   background: rgb(52,58,64);
@@ -16,6 +13,9 @@ const StyledHeader = styled.header`
   padding: 10px 50px;
   align-items: center;
   justify-content: space-between;
+  @media(max-width: 500px){
+    padding: 10px;
+  }
   >.left{
   display: flex;
   align-items: center;
@@ -23,9 +23,16 @@ const StyledHeader = styled.header`
         padding: 0;
         width: 64px;
         height: 64px;
+        @media(max-width: 500px){
+            width: 32px;
+            height: 32px;
+         }
         margin-right: 20px;
       }
       >a{
+      @media(max-width: 500px){
+            font-size: 12px;
+         }
         color: #fff;
         margin-right: 10px;
         border-bottom: 1px solid transparent;
@@ -35,6 +42,9 @@ const StyledHeader = styled.header`
     }
   }
     >.right{
+    @media(max-width: 500px){
+            font-size: 12px;
+         }
       >button{
         border-radius: 5px;
         padding: 4px 10px;
@@ -69,7 +79,7 @@ const Header = observer<React.FC>(() => {
         <Icon id={'#logo'} fill={'rgb(97,218,251)'}/>
         <NavLink to={'/'} exact>首页</NavLink>
         <NavLink to={'/about'} exact>关于</NavLink>
-        <NavLink to={'/history'} exact>上传历史</NavLink>
+        <NavLink to={'/history'} exact>历史</NavLink>
       </div>
       {Store.AuthStore.values.username === '' ?
         <div className="right">

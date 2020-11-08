@@ -9,7 +9,7 @@ const StyledFooter = styled.footer`
 `
 const Footer:React.FC = () => {
   return (
-    <StyledFooter>footer</StyledFooter>
+    <StyledFooter>© haotian</StyledFooter>
   )
 }
 

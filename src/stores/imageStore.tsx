@@ -48,7 +48,7 @@ class imageStore {
     query.include('owner')
     query.equalTo('owner',User.current())
     return new Promise((resolve, reject)=>{
-      query.find().then(r=>{
+      query.find().then((r)=>{
         resolve(r.length)
       }).catch(err=>{console.log(err);})
     })

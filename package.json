@@ -2,6 +2,7 @@
   "name": "tuchuang",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://huang-haotian.gitee.io/picturebed/",
   "dependencies": {
     "@babel/core": "7.12.3",
     "@pmmmwh/react-refresh-webpack-plugin": "0.4.2",
