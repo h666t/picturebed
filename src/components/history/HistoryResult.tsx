@@ -21,6 +21,14 @@ const Wrapper = styled.div`
     margin-top: 20px;
   }
 `
+
+const A = styled.a`
+  display: block;
+  width:500px; 
+  white-space:nowrap; 
+  overflow:hidden; 
+  text-overflow:ellipsis;
+`
 const HistoryResult = observer (
   () => {
     const {Store} = useStore();
@@ -55,7 +63,7 @@ const HistoryResult = observer (
                          />
                        } >
               <List.Item.Meta
-                title={<a href="https://ant.design">{'文件名：' + item.name}</a>}
+                title={<A href={`${item.url}`}>{'文件名：' + item.name}</A>}
                 description={
                   <div>
                     <div>创建时间：{JSON.stringify(dayjs(item.createdAt).format('YYYY年MM月DD日hh:mm'))}</div>

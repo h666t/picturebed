@@ -35,5 +35,8 @@ body {
 main{
   flex: 1;
   padding: 100px;
+  @media(max-width: 500px){
+    padding: 20px;
+  }
 }
 
