@@ -25,7 +25,7 @@ const UploadAntd = observer(() => {
         <p className="ant-upload-drag-icon">
           <InboxOutlined />
         </p>
-        <p className="ant-upload-text">点击或拖拽上传</p>
+        <p className="ant-upload-text">请上传图片</p>
         <p className="ant-upload-hint">
           仅支持 png / jpeg / jpg / svg 格式图片
         </p>

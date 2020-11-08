@@ -28,6 +28,9 @@ const A = styled.a`
   white-space:nowrap; 
   overflow:hidden; 
   text-overflow:ellipsis;
+  @media(max-width: 500px){
+      width: 300px;
+  }
 `
 const HistoryResult = observer (
   () => {
@@ -66,7 +69,7 @@ const HistoryResult = observer (
                 title={<A href={`${item.url}`}>{'文件名：' + item.name}</A>}
                 description={
                   <div>
-                    <div>创建时间：{JSON.stringify(dayjs(item.createdAt).format('YYYY年MM月DD日hh:mm'))}</div>
+                    <div>创建时间：{JSON.stringify(dayjs(item.createdAt).format('YYYY年MM月DD日HH:mm'))}</div>
                     <div>url：{item.url}</div>
                   </div>
                 }
